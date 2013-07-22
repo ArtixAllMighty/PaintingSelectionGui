@@ -12,7 +12,10 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiPaintingButton extends GuiButton {
 	
-	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/painting/paintings_kristoffer_zetterstrand.png");
+	// removed final modifier so Paintings++ can change the shown texture.
+	// changed Texture from resourcelocation to DynamicTexture for Paintings++ compatibility.
+	private static DynamicTexture TEXTURE = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("assets/minecraft/textures/painting/paintings_kristoffer_zetterstrand.png")));
+	//old (for backup if ever needed )new ResourceLocation("textures/painting/paintings_kristoffer_zetterstrand.png");
     
 	protected EnumArt art;
     private static final int EXT = 3;
@@ -52,7 +55,7 @@ public class GuiPaintingButton extends GuiButton {
     public void drawButton(Minecraft mc, int i, int j) {
         if (drawButton && shouldDraw()) {
             FontRenderer fontrenderer = mc.fontRenderer;
-            mc.renderEngine.func_110577_a(TEXTURE);
+            TEXTURE.func_110564_a(); //mc.renderEngine.func_110577_a(TEXTURE);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             boolean flag = i >= xPosition && j >= yPosition && i < xPosition + width && j < yPosition + height;
             drawTexturedModalRect(xPosition, yPosition, art.offsetX, art.offsetY, width, height);
